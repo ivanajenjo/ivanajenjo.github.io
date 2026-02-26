@@ -1,0 +1,103 @@
+---
+const experiences = [
+  {
+    role: 'Backend Software Engineer',
+    company: 'Mercadona',
+    period: 'Jul 2021 — Present',
+    description: 'Architect and scale distributed backend systems powering one of Europe\'s largest retail chains. Design and ship production-grade Spring Boot microservices, drive event-streaming integrations with Apache Kafka, and orchestrate high-availability deployments on GCP with Kubernetes. Spearheading the migration toward fully cloud-native solutions — evaluating and introducing new technologies to boost scalability, resilience, and fault tolerance.',
+    highlights: [
+      'Microservices architecture & scalability',
+      'Event-driven design with Apache Kafka',
+      'GCP infrastructure & Kubernetes orchestration',
+      'API design & inter-service communication',
+      'Performance tuning & fault tolerance',
+    ],
+    tags: ['Java', 'Spring Boot', 'Kafka', 'GCP', 'Kubernetes', 'Docker'],
+  },
+  {
+    role: 'Lecturer — Software Development',
+    company: 'Campus Cámara FP',
+    period: 'Sep 2020 — Jul 2021',
+    description: 'Delivered technical training in software development to professional training students. Designed curriculum, mentored students through hands-on projects, and evaluated technical competencies — strengthening communication and knowledge-transfer skills alongside engineering fundamentals.',
+    highlights: [],
+    tags: ['Teaching', 'Software Development', 'Mentoring'],
+  },
+  {
+    role: 'Project Manager',
+    company: 'Tecsible',
+    period: 'Mar 2019 — Aug 2019',
+    description: 'Coordinated cross-functional project delivery, tracking milestones, aligning stakeholders, and ensuring on-time execution. Gained early exposure to structured project workflows and agile methodologies.',
+    highlights: [],
+    tags: ['Project Management', 'Agile', 'Stakeholder Communication'],
+  },
+];
+---
+
+<section id="experience" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <!-- Section header -->
+    <div class="mb-16 text-center">
+      <p class="text-cyan-400 font-mono text-sm tracking-widest uppercase mb-2">Experience</p>
+      <h2 class="text-4xl md:text-5xl font-bold text-white">Career timeline</h2>
+    </div>
+
+    <!-- Timeline -->
+    <div class="relative max-w-3xl mx-auto">
+      <!-- Vertical line -->
+      <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-purple-500 via-blue-500 to-cyan-500 opacity-30 md:-translate-x-px"></div>
+
+      <div class="space-y-12">
+        {experiences.map((exp, index) => (
+          <div class={`relative flex gap-8 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+            <!-- Dot -->
+            <div class="absolute left-4 md:left-1/2 top-1.5 w-2 h-2 rounded-full bg-gradient-to-br from-purple-400 to-cyan-400 md:-translate-x-1/2 z-10 ring-4 ring-black/50"></div>
+
+            <!-- Spacer -->
+            <div class="hidden md:block md:w-1/2"></div>
+
+            <!-- Card -->
+            <div class="ml-12 md:ml-0 md:w-1/2 md:px-8">
+              <div class="rounded-2xl bg-white/5 border border-white/10 p-6 hover:border-white/20 transition-all duration-300">
+                <span class="text-xs font-mono text-purple-400 uppercase tracking-widest">{exp.period}</span>
+                <h3 class="text-lg font-semibold text-white mt-1">{exp.role}</h3>
+                <p class="text-cyan-400/80 text-sm mb-3">{exp.company}</p>
+                <p class="text-white/50 text-sm leading-relaxed mb-4">{exp.description}</p>
+
+                {exp.highlights.length > 0 && (
+                  <ul class="space-y-1 mb-4">
+                    {exp.highlights.map(h => (
+                      <li class="flex items-start gap-2 text-xs text-white/40">
+                        <span class="text-purple-400 mt-0.5 shrink-0">▹</span>
+                        {h}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                <div class="flex flex-wrap gap-1.5">
+                  {exp.tags.map(tag => (
+                    <span class="px-2 py-0.5 rounded text-xs font-mono bg-white/5 text-white/40">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Education -->
+      <div class="mt-16 pt-12 border-t border-white/10">
+        <p class="text-cyan-400 font-mono text-xs tracking-widest uppercase mb-6 text-center">Education</p>
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h3 class="text-white font-semibold">B.Eng. in Software Engineering</h3>
+            <p class="text-cyan-400/80 text-sm mt-0.5">Universitat Politècnica de València (UPV)</p>
+          </div>
+          <span class="text-xs font-mono text-purple-400 uppercase tracking-widest shrink-0">2015 — 2020</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

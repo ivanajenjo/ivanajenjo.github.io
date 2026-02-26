@@ -1,0 +1,66 @@
+---
+---
+
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <!-- Gradient background -->
+  <div class="absolute inset-0 bg-gradient-to-br from-purple-950 via-blue-950 to-cyan-950"></div>
+
+  <!-- Animated orbs -->
+  <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
+  <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-cyan-500/15 rounded-full blur-3xl animate-pulse" style="animation-delay: 1.5s;"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 0.75s;"></div>
+
+  <!-- Grid overlay -->
+  <div
+    class="absolute inset-0 opacity-10"
+    style="background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 60px 60px;"
+  ></div>
+
+  <!-- Content -->
+  <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+    <p class="text-cyan-400 font-mono text-sm tracking-widest uppercase mb-4 opacity-80">
+      Hi, I'm
+    </p>
+    <h1 class="text-6xl md:text-8xl font-extrabold mb-4 leading-none">
+      <span class="bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+        Iván Ajenjo
+      </span>
+    </h1>
+    <h2 class="text-2xl md:text-3xl font-light text-white/70 mb-6">
+      Backend Software Engineer
+    </h2>
+    <p class="text-white/50 text-lg max-w-xl mx-auto mb-10 leading-relaxed">
+      Architecting scalable, cloud-native backend systems.
+      Specialized in microservices, event-driven architecture, and high-availability infrastructure on GCP.
+    </p>
+
+    <div class="flex flex-wrap gap-3 justify-center mb-10">
+      {['Java', 'Spring Boot', 'Kafka', 'Kubernetes', 'GCP'].map(tag => (
+        <span class="px-3 py-1 rounded-full text-xs font-mono bg-white/5 border border-white/15 text-white/50">
+          {tag}
+        </span>
+      ))}
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <a
+        href="#experience"
+        class="px-8 py-3 rounded-full bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 text-white font-semibold text-sm hover:opacity-90 transition-opacity shadow-lg shadow-purple-500/25"
+      >
+        See my work
+      </a>
+      <a
+        href="#contact"
+        class="px-8 py-3 rounded-full border border-white/20 text-white/70 font-semibold text-sm hover:border-white/40 hover:text-white transition-all"
+      >
+        Get in touch
+      </a>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30 text-xs z-10">
+    <span>Scroll</span>
+    <div class="w-px h-8 bg-gradient-to-b from-white/30 to-transparent animate-bounce"></div>
+  </div>
+</section>
