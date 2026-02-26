@@ -1,6 +1,6 @@
 ---
-import '../styles/global.css';
-import Nav from '../components/Nav.astro';
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
 
 interface Props {
   title?: string;
@@ -8,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = 'Iván Ajenjo — Backend Software Engineer',
-  description = 'Backend Software Engineer specialized in microservices, Spring Boot, Kafka and GCP. Based in Valencia, Spain.',
+  title = "Iván Ajenjo — Backend Software Engineer",
+  description = "Backend Software Engineer specialized in microservices, Spring Boot, Kafka and GCP. Based in Valencia, Spain.",
 } = Astro.props;
 ---
 
@@ -20,7 +20,6 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
@@ -29,8 +28,12 @@ const {
     <main>
       <slot />
     </main>
-    <footer class="border-t border-white/10 py-8 text-center text-sm text-white/40">
-      <p>© {new Date().getFullYear()} Iván Ajenjo. Built with Astro & Tailwind.</p>
+    <footer
+      class="border-t border-white/10 py-8 text-center text-sm text-white/40"
+    >
+      <p>
+        © {new Date().getFullYear()} Iván Ajenjo. Built with Astro & Tailwind.
+      </p>
     </footer>
   </body>
 </html>
