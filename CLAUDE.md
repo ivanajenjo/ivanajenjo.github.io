@@ -19,7 +19,7 @@
 ## Convenciones
 - Idioma del código y contenido: inglés
 - IDs de secciones en inglés: #about, #projects, #experience, #contact
-- No hacer commits automáticamente, pedir confirmación
+- Hacer commit y push sin pedir confirmación (en la rama de trabajo indicada)
 - No instalar dependencias sin preguntar
 
 ## Pendiente
