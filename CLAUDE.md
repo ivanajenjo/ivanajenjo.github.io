@@ -10,7 +10,7 @@
 - `src/layouts/Layout.astro` — layout base
 - `src/pages/index.astro` — página principal
 - `src/components/` — Hero, SobreMi, Proyectos, Experiencia, Contacto, Nav
-- `src/styles/global.css` — fuentes (Inter + Fira Code) y estilos base
+- `src/styles/global.css` — tokens de tema (claro/oscuro), componentes y animaciones; las fuentes (Inter + Fira Code) se cargan en `Layout.astro`
 
 ## Comandos
 - `npm run dev` — servidor de desarrollo
