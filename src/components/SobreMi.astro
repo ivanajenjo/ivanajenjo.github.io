@@ -5,8 +5,14 @@ const skills = [
   'RESTful APIs', 'Microservices', 'CI/CD', 'PostgreSQL',
 ];
 
+// Full years since joining Mercadona (Jul 2021), computed at build time
+const start = new Date(2021, 6, 1);
+const now = new Date();
+const mercadonaYears =
+  now.getFullYear() - start.getFullYear() - (now < new Date(now.getFullYear(), 6, 1) ? 1 : 0);
+
 const stats = [
-  { value: '4+', label: 'Years at Mercadona' },
+  { value: `${mercadonaYears}+`, label: 'Years at Mercadona' },
   { value: '5+', label: 'Years in industry' },
   { value: 'GCP', label: 'Cloud-native focus' },
 ];
@@ -25,7 +31,7 @@ const stats = [
     <div class="grid md:grid-cols-3 gap-5 mt-14 md:mt-20">
       <div class="reveal card-light p-8 md:p-10 md:col-span-2">
         <p class="text-xl md:text-2xl font-semibold tracking-tight leading-snug">
-          With <span class="text-blue-apple">4+ years at Mercadona</span>, I've architected
+          With <span class="text-blue-apple">{mercadonaYears}+ years at Mercadona</span>, I've architected
           distributed microservices, driven event-streaming solutions with Kafka,
           and orchestrated cloud-native infrastructure on GCP.
         </p>
