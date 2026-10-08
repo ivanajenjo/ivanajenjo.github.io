@@ -7,10 +7,15 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "deploy": "npm run build && wrangler deploy",
+    "cf-preview": "npm run build && wrangler dev"
   },
   "dependencies": {
     "astro": "^7.3.8",
     "bootstrap": "^4.5.2"
+  },
+  "devDependencies": {
+    "wrangler": "^4.149.0"
   }
 }
