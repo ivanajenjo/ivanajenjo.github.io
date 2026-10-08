@@ -1,0 +1,22 @@
+<svg aria-labelledby="title desc" viewBox="0 0 200 200" height="512" width="512" xmlns="http://www.w3.org/2000/svg">
+  <title>Backend Server Favicon</title>
+  <desc id="desc">Favicon para desarrollador Backend - Icono de servidor</desc>
+  
+  
+  <rect fill="#0f172a" rx="36" height="200" width="200"></rect>
+  
+  
+  <rect stroke-width="14" stroke="#22d3ee" fill="#1e2937" height="92" width="120" ry="12" rx="12" y="55" x="40"></rect>
+  
+  
+  <rect fill="#334155" rx="3" height="14" width="104" y="68" x="48"></rect>
+  
+  
+  <circle fill="#4ade80" r="7" cy="92" cx="64"></circle>
+  <circle fill="#fbbf24" r="7" cy="92" cx="84"></circle>
+  <circle fill="#4ade80" r="7" cy="92" cx="104"></circle>
+  
+  
+  <rect fill="#64748b" height="5" width="96" rx="1" y="118" x="52"></rect>
+  <rect fill="#64748b" height="5" width="96" rx="1" y="130" x="52"></rect>
+</svg>
