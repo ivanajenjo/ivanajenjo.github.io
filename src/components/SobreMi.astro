@@ -5,15 +5,19 @@ const skills = [
   'RESTful APIs', 'Microservices', 'CI/CD', 'PostgreSQL',
 ];
 
-// Full years since joining Mercadona (Jul 2021), computed at build time
-const start = new Date(2021, 6, 1);
-const now = new Date();
-const mercadonaYears =
-  now.getFullYear() - start.getFullYear() - (now < new Date(now.getFullYear(), 6, 1) ? 1 : 0);
+// Full years elapsed since a date, computed at build time
+const yearsSince = (year: number, monthIndex: number) => {
+  const now = new Date();
+  const hadAnniversary = now >= new Date(now.getFullYear(), monthIndex, 1);
+  return now.getFullYear() - year - (hadAnniversary ? 0 : 1);
+};
+
+const mercadonaYears = yearsSince(2021, 6); // Jul 2021
+const industryYears = yearsSince(2020, 8); // Sep 2020 (first software role)
 
 const stats = [
   { value: `${mercadonaYears}+`, label: 'Years at Mercadona' },
-  { value: '5+', label: 'Years in industry' },
+  { value: `${industryYears}+`, label: 'Years in industry' },
   { value: 'GCP', label: 'Cloud-native focus' },
 ];
 ---
