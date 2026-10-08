@@ -4,8 +4,7 @@
 - Astro v5 + Tailwind CSS v4
 - Desplegado en Cloudflare Pages (rama `master`, build `npm run build`, salida `dist`)
 - Repo: github.com/ivanajenjo/ivanajenjo.github.io
-- URL actual: https://ivanajenjo.github.io
-- Dominio futuro: ivanajenjo.dev (pendiente de configurar)
+- URL actual: https://ivan-ajenjo.com
 
 ## Estructura
 - `src/layouts/Layout.astro` — layout base
@@ -24,6 +23,5 @@
 - No instalar dependencias sin preguntar
 
 ## Pendiente
-- Configurar dominio personalizado ivanajenjo.dev cuando esté comprado
 - Añadir foto real en la sección About
 - Añadir proyectos reales cuando estén disponibles
