@@ -33,71 +33,49 @@ const experiences = [
 ];
 ---
 
-<section id="experience" class="py-24 px-6">
-  <div class="max-w-6xl mx-auto">
-    <!-- Section header -->
-    <div class="mb-16 text-center">
-      <p class="text-cyan-400 font-mono text-sm tracking-widest uppercase mb-2">Experience</p>
-      <h2 class="text-4xl md:text-5xl font-bold text-white">Career timeline</h2>
+<section id="experience" class="on-light bg-paper text-ink py-24 md:py-36 px-6">
+  <div class="max-w-[1024px] mx-auto">
+    <div class="max-w-3xl">
+      <p class="reveal eyebrow mb-3">Experience</p>
+      <h2 class="reveal headline">Career timeline.</h2>
     </div>
 
-    <!-- Timeline -->
-    <div class="relative max-w-3xl mx-auto">
-      <!-- Vertical line -->
-      <div class="absolute left-4 md:left-1/2 top-0 bottom-55 w-px bg-gradient-to-b from-purple-500 via-blue-500 to-cyan-500 opacity-30 md:-translate-x-px"></div>
-
-      <div class="space-y-12">
-        {experiences.map((exp, index) => (
-          <div class={`relative flex gap-8 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-            <!-- Dot -->
-            <div class="absolute left-4 md:left-1/2 top-1.5 w-2 h-2 rounded-full bg-gradient-to-br from-purple-400 to-cyan-400 md:-translate-x-1/2 z-10 ring-4 ring-black/50"></div>
-
-            <!-- Spacer -->
-            <div class="hidden md:block md:w-1/2"></div>
-
-            <!-- Card -->
-            <div class="ml-12 md:ml-0 md:w-1/2 md:px-8">
-              <div class="rounded-2xl bg-white/5 border border-white/10 p-6 hover:border-white/20 transition-all duration-300">
-                <span class="text-xs font-mono text-purple-400 uppercase tracking-widest">{exp.period}</span>
-                <h3 class="text-lg font-semibold text-white mt-1">{exp.role}</h3>
-                <p class="text-cyan-400/80 text-sm mb-3">{exp.company}</p>
-                <p class="text-white/50 text-sm leading-relaxed mb-4">{exp.description}</p>
-
-                {exp.highlights.length > 0 && (
-                  <ul class="space-y-1 mb-4">
-                    {exp.highlights.map(h => (
-                      <li class="flex items-start gap-2 text-xs text-white/40">
-                        <span class="text-purple-400 mt-0.5 shrink-0">▹</span>
-                        {h}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                <div class="flex flex-wrap gap-1.5">
-                  {exp.tags.map(tag => (
-                    <span class="px-2 py-0.5 rounded text-xs font-mono bg-white/5 text-white/40">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
+    <div class="mt-14 md:mt-20 space-y-5">
+      {experiences.map((exp, i) => (
+        <article class="reveal card-light p-8 md:p-12" style={`transition-delay:${0.05 * i}s`}>
+          <div class="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-6">
+            <h3 class="text-2xl md:text-4xl font-semibold tracking-tight">{exp.role}</h3>
+            <span class="text-muted text-base shrink-0">{exp.period}</span>
           </div>
-        ))}
-      </div>
+          <p class="text-blue-apple text-lg font-medium mt-1">{exp.company}</p>
 
-      <!-- Education -->
-      <div class="mt-16 pt-12 border-t border-white/10">
-        <p class="text-cyan-400 font-mono text-xs tracking-widest uppercase mb-6 text-center">Education</p>
-        <div class="rounded-2xl bg-white/5 border border-white/10 p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h3 class="text-white font-semibold">B.Eng. in Software Engineering</h3>
-            <p class="text-cyan-400/80 text-sm mt-0.5">Universitat Politècnica de València (UPV)</p>
+          <p class="text-[#424245] text-lg leading-relaxed mt-6 max-w-3xl">{exp.description}</p>
+
+          {exp.highlights.length > 0 && (
+            <ul class="grid sm:grid-cols-2 gap-x-8 gap-y-3 mt-8">
+              {exp.highlights.map(h => (
+                <li class="flex items-start gap-3 text-base">
+                  <span class="mt-2 h-1.5 w-1.5 rounded-full bg-blue-apple shrink-0"></span>
+                  {h}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div class="flex flex-wrap gap-2 mt-8">
+            {exp.tags.map(tag => <span class="chip !bg-paper !shadow-none">{tag}</span>)}
           </div>
-          <span class="text-xs font-mono text-purple-400 uppercase tracking-widest shrink-0">2015 — 2020</span>
+        </article>
+      ))}
+
+      <article class="reveal card-dark p-8 md:p-12 text-white flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <p class="text-[#a1a1a6] text-base font-semibold mb-2">Education</p>
+          <h3 class="text-2xl md:text-3xl font-semibold tracking-tight">B.Eng. in Software Engineering</h3>
+          <p class="text-[#2997ff] text-lg mt-1">Universitat Politècnica de València (UPV)</p>
         </div>
-      </div>
+        <span class="text-[#a1a1a6] text-base shrink-0">2015 — 2020</span>
+      </article>
     </div>
   </div>
 </section>
