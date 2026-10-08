@@ -1,6 +1,6 @@
 # Portfolio Iván Ajenjo
 
-Sitio estático con [Astro](https://astro.build), desplegado en Cloudflare Pages.
+Portfolio hecho con [Astro](https://astro.build) v5 y Tailwind CSS v4, desplegado en Cloudflare Pages.
 
 ## Desarrollo
 
@@ -8,11 +8,10 @@ Sitio estático con [Astro](https://astro.build), desplegado en Cloudflare Pages
 npm install
 npm run dev      # http://localhost:4321
 npm run build    # genera ./dist
+npm run preview  # sirve ./dist en local
 ```
 
 ## Cloudflare Pages
-
-Workers & Pages → Create → Pages → Connect to Git, y configura:
 
 | Ajuste | Valor |
 | --- | --- |
@@ -20,3 +19,4 @@ Workers & Pages → Create → Pages → Connect to Git, y configura:
 | Build command | `npm run build` |
 | Build output directory | `dist` |
 | Variable `NODE_VERSION` | `22` |
+| Rama de producción | `master` |

@@ -1,26 +1,39 @@
 ---
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/album.css';
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
 
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
 }
 
-const { title, description = '' } = Astro.props;
+const {
+  title = "Iván Ajenjo — Backend Software Engineer",
+  description = "Backend Software Engineer specialized in microservices, Spring Boot, Kafka and GCP. Based in Valencia, Spain.",
+} = Astro.props;
 ---
 
 <!doctype html>
 <html lang="es">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta name="author" content="Ivan Ajenjo" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
   <body>
-    <slot />
+    <Nav />
+    <main>
+      <slot />
+    </main>
+    <footer
+      class="border-t border-white/10 py-8 text-center text-sm text-white/40"
+    >
+      <p>
+        © {new Date().getFullYear()} Iván Ajenjo. Built with Astro & Tailwind.
+      </p>
+    </footer>
   </body>
 </html>

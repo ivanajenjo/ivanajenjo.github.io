@@ -1,8 +1,7 @@
 {
-  "name": "ivanajenjo-portfolio",
+  "name": "portfolio-tmp",
   "type": "module",
-  "version": "1.0.0",
-  "private": true,
+  "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -10,7 +9,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^7.3.8",
-    "bootstrap": "^4.5.2"
+    "@tailwindcss/vite": "^4.2.1",
+    "astro": "^5.17.1",
+    "tailwindcss": "^4.2.1"
   }
 }
