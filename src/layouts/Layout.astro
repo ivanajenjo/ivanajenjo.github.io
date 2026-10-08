@@ -13,6 +13,26 @@ const {
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
+
+// Structured data so search engines can identify the person behind the site
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Iván Ajenjo",
+  url: Astro.site?.href,
+  jobTitle: "Backend Software Engineer",
+  worksFor: { "@type": "Organization", name: "Mercadona" },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Valencia",
+    addressCountry: "ES",
+  },
+  knowsAbout: ["Java", "Spring Boot", "Microservices", "Apache Kafka", "Google Cloud Platform", "Kubernetes"],
+  sameAs: [
+    "https://github.com/ivanajenjo",
+    "https://www.linkedin.com/in/iv%C3%A1n-i%C3%B1aki-ajenjo-vicente-2136031b7/",
+  ],
+};
 ---
 
 <!doctype html>
@@ -24,6 +44,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="theme-color" content="#000000" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap.xml" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
 
@@ -34,6 +55,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
