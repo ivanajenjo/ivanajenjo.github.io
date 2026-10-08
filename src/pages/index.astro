@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Card from '../components/Card.astro';
+
+const text =
+  'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.';
+const cards = Array.from({ length: 9 }, () => ({ text, time: '9 mins' }));
+---
+
+<Layout title="Portfolio Iván Ajenjo">
+  <Header />
+
+  <main role="main">
+    <section class="jumbotron text-center">
+      <div class="container">
+        <h1>Portfolio Iván Ajenjo</h1>
+        <p class="lead text-muted">
+          Portfolio de Iván Ajenjo, ingeniero de software por la Universidad Politécnica de Valencia.
+        </p>
+        <p>
+          <a href="#" class="btn btn-primary my-2">Main call to action</a>
+          <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+        </p>
+      </div>
+    </section>
+
+    <div class="album py-5 bg-light">
+      <div class="container">
+        <div class="row">
+          {cards.map((card) => <Card {...card} />)}
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
