@@ -1,13 +1,57 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-sans: 'SF Pro Display', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  --font-mono: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace;
   --color-ink: #1d1d1f;
   --color-paper: #f5f5f7;
   --color-muted: #86868b;
   --color-blue-apple: #0071e3;
   --color-blue-apple-light: #2997ff;
+}
+
+/* Semantic tokens for the light sections — they flip in dark mode */
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-accent: var(--accent);
+  --color-hairline: var(--hairline);
+}
+
+:root {
+  color-scheme: light dark;
+  --surface: #f5f5f7;
+  --surface-raised: #ffffff;
+  --fg: #1d1d1f;
+  --fg-muted: #424245;
+  --fg-subtle: #6e6e73;
+  --accent: #0071e3;
+  --hairline: rgba(0, 0, 0, 0.06);
+}
+
+:root[data-theme="dark"] {
+  --surface: #0b0b0d;
+  --surface-raised: #161618;
+  --fg: #f5f5f7;
+  --fg-muted: #c7c7cc;
+  --fg-subtle: #98989d;
+  --accent: #2997ff;
+  --hairline: rgba(255, 255, 255, 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface: #0b0b0d;
+    --surface-raised: #161618;
+    --fg: #f5f5f7;
+    --fg-muted: #c7c7cc;
+    --fg-subtle: #98989d;
+    --accent: #2997ff;
+    --hairline: rgba(255, 255, 255, 0.08);
+  }
 }
 
 @layer base {
@@ -24,12 +68,26 @@
     letter-spacing: -0.011em;
   }
 
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
   ::selection {
     background: rgba(41, 151, 255, 0.35);
   }
 
+  :focus-visible {
+    outline: 2px solid var(--color-blue-apple-light);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
   section[id] {
-    scroll-margin-top: 44px;
+    scroll-margin-top: 72px;
   }
 }
 
@@ -51,15 +109,20 @@
   .btn-primary {
     display: inline-flex;
     align-items: center;
+    gap: 0.4rem;
     padding: 0.7rem 1.4rem;
     border-radius: 980px;
     background: var(--color-blue-apple);
     color: #fff;
     font-size: 1.0625rem;
-    transition: background 0.2s;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.3s;
   }
   .btn-primary:hover {
     background: #0077ed;
+    box-shadow: 0 8px 30px -8px rgba(0, 113, 227, 0.7);
+  }
+  .btn-primary:active {
+    transform: scale(0.97);
   }
 
   .link-apple {
@@ -70,7 +133,7 @@
     text-decoration: underline;
   }
   .on-light .link-apple {
-    color: var(--color-blue-apple);
+    color: var(--accent);
   }
 
   .chip {
@@ -81,19 +144,103 @@
     color: #d2d2d7;
   }
   .on-light .chip {
-    background: #fff;
-    color: var(--color-ink);
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+    background: var(--surface-raised);
+    color: var(--fg);
+    box-shadow: 0 0 0 1px var(--hairline);
   }
 
   .card-dark {
     background: #1d1d1f;
     border-radius: 28px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
   }
   .card-light {
-    background: #fff;
+    background: var(--surface-raised);
     border-radius: 28px;
-    color: var(--color-ink);
+    color: var(--fg);
+    box-shadow: inset 0 0 0 1px var(--hairline);
+    transition: transform 0.4s cubic-bezier(0.28, 0.11, 0.32, 1), box-shadow 0.4s;
+  }
+
+  /* Cursor-following glow; --mx/--my are set from JS */
+  .spotlight {
+    position: relative;
+    isolation: isolate;
+  }
+  .spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s;
+    background: radial-gradient(
+      400px circle at var(--mx, 50%) var(--my, 50%),
+      var(--spot, rgba(41, 151, 255, 0.16)),
+      transparent 70%
+    );
+  }
+  .spotlight:hover::before {
+    opacity: 1;
+  }
+
+  /* Faint engineering grid, faded out towards the edges */
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+  }
+}
+
+/* Hero aurora */
+.aurora {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(100px);
+  opacity: 0.38;
+  will-change: transform;
+  animation: drift 18s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(6%, -4%, 0) scale(1.1); }
+  100% { transform: translate3d(-5%, 5%, 0) scale(0.95); }
+}
+
+@keyframes ping-soft {
+  0% { transform: scale(1); opacity: 0.7; }
+  80%, 100% { transform: scale(2.4); opacity: 0; }
+}
+.ping {
+  animation: ping-soft 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes nudge {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+.nudge {
+  animation: nudge 2s ease-in-out infinite;
+}
+
+/* Scroll progress bar — CSS scroll-driven animation, hidden where unsupported */
+.scroll-progress {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    display: block;
+    transform-origin: 0 50%;
+    animation: progress linear both;
+    animation-timeline: scroll(root);
+  }
+  @keyframes progress {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
   }
 }
 
@@ -101,18 +248,26 @@
 .reveal {
   opacity: 0;
   transform: translateY(28px);
+  filter: blur(6px);
   transition: opacity 0.9s cubic-bezier(0.28, 0.11, 0.32, 1),
-    transform 0.9s cubic-bezier(0.28, 0.11, 0.32, 1);
+    transform 0.9s cubic-bezier(0.28, 0.11, 0.32, 1),
+    filter 0.9s cubic-bezier(0.28, 0.11, 0.32, 1);
 }
 .reveal.is-visible {
   opacity: 1;
   transform: none;
+  filter: none;
 }
+
 @media (prefers-reduced-motion: reduce) {
   .reveal {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
+  }
+  .aurora, .ping, .nudge {
+    animation: none;
   }
   html {
     scroll-behavior: auto;

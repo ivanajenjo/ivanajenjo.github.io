@@ -33,42 +33,54 @@ const experiences = [
 ];
 ---
 
-<section id="experience" class="on-light bg-paper text-ink py-24 md:py-36 px-6">
+<section id="experience" class="on-light bg-surface text-fg py-24 md:py-36 px-6">
   <div class="max-w-[1024px] mx-auto">
     <div class="max-w-3xl">
       <p class="reveal eyebrow mb-3">Experience</p>
       <h2 class="reveal headline">Career timeline.</h2>
     </div>
 
-    <div class="mt-14 md:mt-20 space-y-5">
+    <ol class="relative mt-14 md:mt-20 space-y-5 pl-7 md:pl-12">
+      <span class="absolute left-[5px] md:left-[11px] top-4 bottom-4 w-px bg-gradient-to-b from-accent via-hairline to-transparent" aria-hidden="true"></span>
       {experiences.map((exp, i) => (
-        <article class="reveal card-light p-8 md:p-12" style={`transition-delay:${0.05 * i}s`}>
-          <div class="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-6">
-            <h3 class="text-2xl md:text-4xl font-semibold tracking-tight">{exp.role}</h3>
-            <span class="text-muted text-base shrink-0">{exp.period}</span>
-          </div>
-          <p class="text-blue-apple text-lg font-medium mt-1">{exp.company}</p>
+        <li class="relative">
+          <span class="absolute -left-7 md:-left-12 top-11 md:top-14 flex h-[11px] w-[11px] md:h-[23px] md:w-[23px] items-center justify-center" aria-hidden="true">
+            {i === 0 && <span class="ping absolute inset-0 rounded-full bg-accent/40"></span>}
+            <span class={`relative h-[11px] w-[11px] rounded-full ring-4 ring-surface ${i === 0 ? 'bg-accent' : 'bg-fg-subtle/50'}`}></span>
+          </span>
+          <article class="reveal card-light p-8 md:p-12" style={`transition-delay:${0.05 * i}s`}>
+            <div class="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-6">
+              <h3 class="text-2xl md:text-4xl font-semibold tracking-tight">{exp.role}</h3>
+              <span class="text-fg-subtle text-sm md:text-base shrink-0 font-mono">{exp.period}</span>
+            </div>
+            <p class="text-accent text-lg font-medium mt-1 flex items-center gap-2">
+              {exp.company}
+              {i === 0 && <span class="text-xs font-semibold uppercase tracking-wider rounded-full bg-accent/10 px-2 py-0.5">Current</span>}
+            </p>
 
-          <p class="text-[#424245] text-lg leading-relaxed mt-6 max-w-3xl">{exp.description}</p>
+            <p class="text-fg-muted text-lg leading-relaxed mt-6 max-w-3xl">{exp.description}</p>
 
-          {exp.highlights.length > 0 && (
-            <ul class="grid sm:grid-cols-2 gap-x-8 gap-y-3 mt-8">
-              {exp.highlights.map(h => (
-                <li class="flex items-start gap-3 text-base">
-                  <span class="mt-2 h-1.5 w-1.5 rounded-full bg-blue-apple shrink-0"></span>
-                  {h}
-                </li>
-              ))}
-            </ul>
-          )}
+            {exp.highlights.length > 0 && (
+              <ul class="grid sm:grid-cols-2 gap-x-8 gap-y-3 mt-8">
+                {exp.highlights.map(h => (
+                  <li class="flex items-start gap-3 text-base">
+                    <span class="mt-2 h-1.5 w-1.5 rounded-full bg-accent shrink-0"></span>
+                    {h}
+                  </li>
+                ))}
+              </ul>
+            )}
 
-          <div class="flex flex-wrap gap-2 mt-8">
-            {exp.tags.map(tag => <span class="chip !bg-paper !shadow-none">{tag}</span>)}
-          </div>
-        </article>
+            <div class="flex flex-wrap gap-2 mt-8">
+              {exp.tags.map(tag => <span class="chip !bg-surface !shadow-none">{tag}</span>)}
+            </div>
+          </article>
+        </li>
       ))}
+    </ol>
 
-      <article class="reveal card-dark p-8 md:p-12 text-white flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div class="mt-5">
+      <article class="reveal spotlight card-dark p-8 md:p-12 text-white flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <p class="text-[#a1a1a6] text-base font-semibold mb-2">Education</p>
           <h3 class="text-2xl md:text-3xl font-semibold tracking-tight">B.Eng. in Software Engineering</h3>

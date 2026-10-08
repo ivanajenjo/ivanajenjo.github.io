@@ -31,20 +31,23 @@ const links = [
             target={link.href.startsWith("mailto") ? undefined : "_blank"}
             rel="noopener noreferrer"
             style={`transition-delay:${0.08 * i}s`}
-            class="reveal group card-dark p-8 md:p-10 flex flex-col gap-10 hover:bg-[#2a2a2d] transition-colors duration-300"
+            class="reveal group spotlight card-dark p-8 md:p-10 flex flex-col gap-10 hover:bg-[#2a2a2d] transition-colors duration-300"
           >
             <span class="text-white [&_svg]:w-9 [&_svg]:h-9" set:html={link.icon} />
             <div>
               <p class="text-2xl font-semibold tracking-tight">{link.label}</p>
               <p class="text-[#a1a1a6] text-base mt-1 break-all">{link.value}</p>
-              <p class="text-[#2997ff] mt-4 group-hover:underline">Open &rsaquo;</p>
+              <p class="text-[#2997ff] mt-4 inline-flex items-center gap-1">
+                Open
+                <span class="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true">↗</span>
+              </p>
             </div>
           </a>
         ))
       }
     </div>
 
-    <div class="reveal card-dark mt-5 px-8 py-16 md:py-20 relative overflow-hidden">
+    <div class="reveal spotlight card-dark mt-5 px-8 py-16 md:py-20 relative overflow-hidden">
       <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(50% 70% at 50% 100%, rgba(41,151,255,0.18), transparent 70%);"></div>
       <div class="relative">
         <h3 class="text-3xl md:text-5xl font-semibold tracking-tight">Got an interesting challenge?</h3>

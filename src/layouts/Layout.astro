@@ -11,31 +11,65 @@ const {
   title = "Iván Ajenjo — Backend Software Engineer",
   description = "Backend Software Engineer specialized in microservices, Spring Boot, Kafka and GCP. Based in Valencia, Spain.",
 } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#000000" />
+    <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Fira+Code:wght@400;500&display=swap"
+    />
+
+    <!-- Apply the saved theme before first paint to avoid a flash -->
+    <script is:inline>
+      try {
+        const t = localStorage.getItem("theme");
+        if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+      } catch {}
+    </script>
   </head>
   <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-ink"
+    >
+      Skip to content
+    </a>
     <Nav />
-    <main>
+    <main id="main">
       <slot />
     </main>
-    <footer class="bg-paper py-8 px-6 text-center text-xs text-muted">
-      <p>
-        Copyright © {new Date().getFullYear()} Iván Ajenjo. Built with Astro & Tailwind.
-      </p>
+    <footer class="on-light bg-surface text-fg-subtle py-10 px-6 text-xs">
+      <div class="max-w-[1024px] mx-auto flex flex-col sm:flex-row gap-4 items-center justify-between">
+        <p>Copyright © {new Date().getFullYear()} Iván Ajenjo. Built with Astro & Tailwind.</p>
+        <a href="#" class="hover:text-fg transition-colors">Back to top ↑</a>
+      </div>
     </footer>
 
     <script>
+      // Scroll reveal
       const els = document.querySelectorAll(".reveal");
       if ("IntersectionObserver" in window) {
         const io = new IntersectionObserver(
@@ -53,6 +87,15 @@ const {
       } else {
         els.forEach((el) => el.classList.add("is-visible"));
       }
+
+      // Spotlight cards: expose the pointer position as CSS variables
+      document.querySelectorAll<HTMLElement>(".spotlight").forEach((card) => {
+        card.addEventListener("pointermove", (e) => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty("--mx", `${e.clientX - r.left}px`);
+          card.style.setProperty("--my", `${e.clientY - r.top}px`);
+        });
+      });
     </script>
   </body>
 </html>

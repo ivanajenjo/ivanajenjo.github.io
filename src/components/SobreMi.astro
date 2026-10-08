@@ -22,7 +22,7 @@ const stats = [
 ];
 ---
 
-<section id="about" class="on-light bg-paper text-ink py-24 md:py-36 px-6">
+<section id="about" class="on-light bg-surface text-fg py-24 md:py-36 px-6">
   <div class="max-w-[1024px] mx-auto">
     <div class="max-w-3xl">
       <p class="reveal eyebrow mb-3">About me</p>
@@ -32,38 +32,52 @@ const stats = [
     </div>
 
     <!-- Bento grid -->
-    <div class="grid md:grid-cols-3 gap-5 mt-14 md:mt-20">
-      <div class="reveal card-light p-8 md:p-10 md:col-span-2">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5 mt-14 md:mt-20">
+      <div class="reveal card-light p-8 md:p-10 col-span-2">
         <p class="text-xl md:text-2xl font-semibold tracking-tight leading-snug">
-          With <span class="text-blue-apple">{mercadonaYears}+ years at Mercadona</span>, I've architected
+          With <span class="text-accent">{mercadonaYears}+ years at Mercadona</span>, I've architected
           distributed microservices, driven event-streaming solutions with Kafka,
           and orchestrated cloud-native infrastructure on GCP.
         </p>
-        <p class="text-muted text-lg leading-relaxed mt-6">
+        <p class="text-fg-subtle text-lg leading-relaxed mt-6">
           I thrive at the intersection of software quality and system design —
           optimizing service performance, streamlining CI/CD pipelines,
           and designing resilient APIs that power large-scale operations.
         </p>
       </div>
 
-      <div class="reveal card-dark p-8 md:p-10 flex flex-col justify-between text-white" style="transition-delay:.08s">
-        <div class="text-6xl" aria-hidden="true">👨‍💻</div>
-        <p class="text-[#a1a1a6] text-lg leading-snug mt-10">
+      <div class="reveal spotlight card-dark col-span-2 md:col-span-1 p-7 md:p-8 flex flex-col justify-between text-white" style="transition-delay:.08s">
+        <div>
+          <div class="flex gap-1.5 mb-5" aria-hidden="true">
+            <span class="h-2.5 w-2.5 rounded-full bg-[#ff5f57]"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-[#febc2e]"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-[#28c840]"></span>
+          </div>
+          <pre class="font-mono text-[13px] leading-relaxed text-[#d2d2d7] whitespace-pre-wrap"><code><span class="text-[#c084fc]">const</span> <span class="text-[#2997ff]">ivan</span> = &#123;
+  role: <span class="text-[#86efac]">"Backend Engineer"</span>,
+  based: <span class="text-[#86efac]">"Valencia, ES"</span>,
+  focus: [
+    <span class="text-[#86efac]">"distributed systems"</span>,
+    <span class="text-[#86efac]">"cloud-native"</span>,
+  ],
+&#125;;</code></pre>
+        </div>
+        <p class="text-[#a1a1a6] text-base leading-snug mt-8">
           Currently focused on cloud-native architectures and distributed systems.
         </p>
       </div>
 
       {stats.map((s, i) => (
-        <div class="reveal card-light p-8 md:p-10" style={`transition-delay:${0.08 * i}s`}>
-          <p class="text-5xl md:text-6xl font-semibold tracking-tighter">{s.value}</p>
-          <p class="text-muted text-base mt-2">{s.label}</p>
+        <div class={`reveal card-light p-6 md:p-10 ${i === 2 ? "col-span-2 md:col-span-1" : ""}`} style={`transition-delay:${0.08 * i}s`}>
+          <p class="text-5xl md:text-6xl font-semibold tracking-tighter bg-gradient-to-br from-fg to-fg-subtle bg-clip-text text-transparent">{s.value}</p>
+          <p class="text-fg-subtle text-base mt-2">{s.label}</p>
         </div>
       ))}
 
-      <div class="reveal card-light p-8 md:p-10 md:col-span-3">
+      <div class="reveal card-light p-8 md:p-10 col-span-2 md:col-span-3">
         <h3 class="text-xl font-semibold tracking-tight mb-5">Tech stack</h3>
         <div class="flex flex-wrap gap-2">
-          {skills.map(skill => <span class="chip !bg-paper !shadow-none !text-base !px-4 !py-2">{skill}</span>)}
+          {skills.map(skill => <span class="chip !bg-surface !shadow-none !text-base !px-4 !py-2">{skill}</span>)}
         </div>
       </div>
     </div>
