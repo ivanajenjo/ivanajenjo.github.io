@@ -8,31 +8,59 @@ interface Props {
 }
 
 const {
-  title = "Iván Ajenjo — Backend Software Engineer",
-  description = "Backend Software Engineer specialized in microservices, Spring Boot, Kafka and cloud-native platforms. Based in Valencia, Spain.",
+  title = "Iván Ajenjo — Backend Software Engineer | Java, Spring Boot & Kafka",
+  description = "Iván Ajenjo is a Backend Software Engineer in Valencia, Spain, specialized in Java, Spring Boot microservices, Apache Kafka and cloud-native platforms on Kubernetes.",
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
 // Structured data so search engines can identify the person behind the site
+const siteUrl = Astro.site?.origin ?? "https://ivan-ajenjo.com";
+const ogImage = `${siteUrl}/og-image.png`;
+
 const personSchema = {
-  "@context": "https://schema.org",
   "@type": "Person",
+  "@id": `${siteUrl}/#person`,
   name: "Iván Ajenjo",
-  url: Astro.site?.href,
+  alternateName: ["Ivan Ajenjo", "Iván Ajenjo Vicente", "Ivan Ajenjo Vicente"],
+  url: `${siteUrl}/`,
+  image: ogImage,
+  description,
   jobTitle: "Backend Software Engineer",
-  worksFor: { "@type": "Organization", name: "Mercadona" },
   address: {
     "@type": "PostalAddress",
     addressLocality: "Valencia",
     addressCountry: "ES",
   },
   knowsAbout: ["Java", "Spring Boot", "Microservices", "Apache Kafka", "Cloud Computing", "Kubernetes"],
+  alumniOf: { "@type": "CollegeOrUniversity", name: "Universitat Politècnica de València" },
   sameAs: [
     "https://github.com/ivanajenjo",
     "https://www.linkedin.com/in/iv%C3%A1n-i%C3%B1aki-ajenjo-vicente-2136031b7/",
   ],
 };
+
+const websiteSchema = {
+  "@type": "WebSite",
+  "@id": `${siteUrl}/#website`,
+  url: `${siteUrl}/`,
+  name: "Iván Ajenjo",
+  inLanguage: "en",
+  publisher: { "@id": `${siteUrl}/#person` },
+};
+
+const pageSchema = {
+  "@type": "ProfilePage",
+  "@id": `${canonical.href}#profile`,
+  url: canonical.href,
+  name: title,
+  description,
+  inLanguage: "en",
+  isPartOf: { "@id": `${siteUrl}/#website` },
+  mainEntity: { "@id": `${siteUrl}/#person` },
+};
+
+const jsonLd = { "@context": "https://schema.org", "@graph": [personSchema, websiteSchema, pageSchema] };
 ---
 
 <!doctype html>
@@ -41,22 +69,34 @@ const personSchema = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta name="author" content="Iván Ajenjo" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <meta name="theme-color" content="#000000" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="sitemap" href="/sitemap.xml" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="Iván Ajenjo" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="profile:first_name" content="Iván" />
+    <meta property="profile:last_name" content="Ajenjo" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Iván Ajenjo — Backend Software Engineer" />
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
-    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

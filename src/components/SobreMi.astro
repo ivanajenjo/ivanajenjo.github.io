@@ -12,12 +12,12 @@ const yearsSince = (year: number, monthIndex: number) => {
   return now.getFullYear() - year - (hadAnniversary ? 0 : 1);
 };
 
-const mercadonaYears = yearsSince(2021, 6); // Jul 2021
+const backendYears = yearsSince(2021, 6); // Jul 2021 (first backend role)
 const industryYears = yearsSince(2020, 8); // Sep 2020 (first software role)
 
 const stats = [
-  { value: `${mercadonaYears}+`, label: 'Years at Mercadona' },
-  { value: `${industryYears}+`, label: 'Years in industry' },
+  { value: `${backendYears}+`, label: 'Years in backend engineering' },
+  { value: `${industryYears}+`, label: 'Years in software' },
   { value: 'Cloud', label: 'Cloud-native focus' },
 ];
 ---
@@ -35,7 +35,7 @@ const stats = [
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5 mt-14 md:mt-20">
       <div class="reveal card-light p-8 md:p-10 col-span-2">
         <p class="text-xl md:text-2xl font-semibold tracking-tight leading-snug">
-          With <span class="text-accent">{mercadonaYears}+ years at Mercadona</span>, I've architected
+          With <span class="text-accent">{backendYears}+ years in backend engineering</span>, I've architected
           distributed microservices, driven event-streaming solutions with Kafka,
           and orchestrated cloud-native infrastructure at scale.
         </p>
