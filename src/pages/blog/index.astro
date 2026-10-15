@@ -1,0 +1,57 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getPosts, formatDate, readingTime } from "../../lib/posts";
+
+const posts = await getPosts();
+---
+
+<Layout
+  title="Blog — Iván Ajenjo"
+  description="Ideas sobre desarrollo backend, arquitectura de software y lo que voy aprendiendo por el camino."
+  lang="es"
+  kind="blog"
+>
+  <div class="on-light bg-surface text-fg min-h-screen pt-32 md:pt-40 pb-24 md:pb-32 px-6">
+    <div class="max-w-[720px] mx-auto">
+      <p class="eyebrow mb-3">Blog</p>
+      <h1 class="headline">Ideas de desarrollo.</h1>
+      <p class="text-fg-muted text-lg md:text-xl mt-6 leading-snug">
+        Notas sobre backend, arquitectura y lo que voy aprendiendo por el camino.
+        <a href="/rss.xml" class="link-apple whitespace-nowrap">RSS ↗</a>
+      </p>
+
+      {posts.length === 0 ? (
+        <p class="text-fg-subtle mt-16">Todavía no hay artículos publicados. Pronto.</p>
+      ) : (
+        <ul class="mt-14 md:mt-20 flex flex-col gap-4">
+          {posts.map((post) => (
+            <li>
+              <a
+                href={`/blog/${post.id}/`}
+                class="spotlight card-light block p-6 md:p-8 hover:-translate-y-0.5"
+              >
+                <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-fg-subtle">
+                  <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+                  <span aria-hidden="true">·</span>
+                  <span>{readingTime(post.body)}</span>
+                  {post.data.draft && (
+                    <span class="rounded-full bg-amber-400/20 text-amber-700 px-2 py-0.5 text-xs font-medium">
+                      Borrador
+                    </span>
+                  )}
+                </div>
+                <h2 class="text-2xl font-semibold tracking-tight mt-3">{post.data.title}</h2>
+                <p class="text-fg-muted mt-2 leading-snug">{post.data.description}</p>
+                {post.data.tags.length > 0 && (
+                  <ul class="flex flex-wrap gap-2 mt-5" aria-label="Etiquetas">
+                    {post.data.tags.map((tag) => <li class="chip">{tag}</li>)}
+                  </ul>
+                )}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </div>
+</Layout>
