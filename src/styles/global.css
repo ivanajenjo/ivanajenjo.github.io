@@ -3,6 +3,9 @@
 @theme {
   --font-sans: 'SF Pro Display', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
   --font-mono: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* Blog only: these families are loaded on blog pages */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
   --color-ink: #1d1d1f;
   --color-paper: #f5f5f7;
   --color-muted: #86868b;
@@ -271,5 +274,496 @@
   }
   html {
     scroll-behavior: auto;
+  }
+}
+
+/* ── Blog: warm editorial identity ──────────────────────────────────
+   Pages rendered with kind="blog" | "article" get <body class="blog">.
+   It redefines the semantic tokens, so everything using bg-surface,
+   text-fg… inside the blog turns into paper and ink. */
+.blog {
+  --surface: #f4eee3;
+  --surface-raised: #fbf7ef;
+  --fg: #2a231d;
+  --fg-muted: #4a4038;
+  --fg-subtle: #74665a;
+  --accent: #a84a22;
+  --hairline: rgba(70, 45, 20, 0.14);
+  --mark: rgba(196, 98, 52, 0.2);
+  --grain-opacity: 0.07;
+  --grain-blend: multiply;
+
+  background-color: var(--surface);
+  color: var(--fg);
+  letter-spacing: 0;
+}
+:root[data-theme="dark"] .blog {
+  --surface: #1a1612;
+  --surface-raised: #241f1a;
+  --fg: #efe6d8;
+  --fg-muted: #d3c7b6;
+  --fg-subtle: #a09282;
+  --accent: #e3916a;
+  --hairline: rgba(255, 235, 210, 0.11);
+  --mark: rgba(227, 145, 106, 0.24);
+  --grain-opacity: 0.05;
+  --grain-blend: screen;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .blog {
+    --surface: #1a1612;
+    --surface-raised: #241f1a;
+    --fg: #efe6d8;
+    --fg-muted: #d3c7b6;
+    --fg-subtle: #a09282;
+    --accent: #e3916a;
+    --hairline: rgba(255, 235, 210, 0.11);
+    --mark: rgba(227, 145, 106, 0.24);
+    --grain-opacity: 0.05;
+    --grain-blend: screen;
+  }
+}
+
+/* Paper grain: inline SVG noise over the whole page */
+.blog::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: var(--grain-blend);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.blog ::selection {
+  background: var(--mark);
+}
+.blog :focus-visible {
+  outline-color: var(--accent);
+}
+
+/* Nav: same structure as the portfolio, recoloured as frosted paper */
+.blog .scroll-progress {
+  background: var(--accent);
+}
+.blog header nav,
+.blog #mobile-menu {
+  background: color-mix(in srgb, var(--surface-raised) 72%, transparent);
+  border-color: var(--hairline);
+  box-shadow: 0 8px 30px -14px rgba(60, 35, 15, 0.35);
+}
+.blog header nav a,
+.blog header nav button,
+.blog #mobile-menu a {
+  color: var(--fg-muted);
+}
+.blog header nav a:hover,
+.blog header nav button:hover,
+.blog header nav a[aria-current="page"] {
+  color: var(--fg);
+  background: var(--hairline);
+}
+.blog header nav > a:first-child {
+  color: var(--fg);
+  background: none;
+}
+.blog header nav > a:first-child span {
+  color: var(--accent);
+}
+.blog #mobile-menu li {
+  border-color: var(--hairline);
+}
+
+/* Type */
+.blog-kicker,
+.blog-meta,
+.blog-year,
+.blog-entry-date {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  color: var(--fg-subtle);
+}
+.blog-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+}
+.blog-title {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 100, "opsz" 144;
+  font-weight: 500;
+  font-size: clamp(2.6rem, 7vw, 4.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: var(--fg);
+}
+.blog-title--post {
+  font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+  line-height: 1.08;
+}
+.blog-lede {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.15rem, 2.2vw, 1.375rem);
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+.blog-link,
+.blog-back {
+  color: var(--accent);
+  text-underline-offset: 4px;
+}
+.blog-link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+.blog-link:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+.blog-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em 1.1em;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+}
+.blog-back:hover {
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
+  border-color: var(--accent);
+}
+.blog-back:hover .blog-back-arrow {
+  transform: translateX(-3px);
+}
+.blog-back-arrow {
+  transition: transform 0.2s;
+}
+.blog-draft {
+  margin-left: 0.6em;
+  padding: 0.1em 0.5em;
+  border: 1px dashed currentColor;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0.04em;
+  vertical-align: middle;
+  color: var(--accent);
+}
+
+/* Index: year-grouped, like a notebook's table of contents */
+.blog-year {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--accent);
+}
+.blog-year::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--hairline);
+}
+.blog-index > li {
+  border-bottom: 1px dashed var(--hairline);
+}
+.blog-entry {
+  display: grid;
+  gap: 0.35rem 2rem;
+  padding: 1.75rem 0;
+}
+@media (min-width: 640px) {
+  .blog-entry {
+    grid-template-columns: 4.5rem 1fr;
+  }
+}
+.blog-entry-date {
+  padding-top: 0.45rem;
+}
+.blog-entry-title {
+  display: inline;
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 100;
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  /* Highlighter sweep on hover */
+  background-image: linear-gradient(transparent 10%, var(--mark) 10%, var(--mark) 94%, transparent 94%);
+  background-size: 0% 100%;
+  /* Bleed the highlight slightly past the glyphs without shifting the text */
+  padding: 0 0.15em;
+  margin: 0 -0.15em;
+  border-radius: 0.15em;
+  background-repeat: no-repeat;
+  transition: background-size 0.45s cubic-bezier(0.28, 0.11, 0.32, 1);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.blog-entry:hover .blog-entry-title,
+.blog-entry:focus-visible .blog-entry-title {
+  background-size: 100% 100%;
+}
+.blog-entry-desc {
+  margin-top: 0.6rem;
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--fg-muted);
+}
+
+/* Post furniture */
+.blog-ornament {
+  margin: 3rem 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+.blog-colophon {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--hairline);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.75rem 2rem;
+}
+.blog-tags {
+  max-width: 22rem;
+}
+@media (min-width: 640px) {
+  .blog-tags {
+    text-align: right;
+  }
+  .blog-tag-list {
+    justify-content: flex-end;
+  }
+}
+.blog-tags-label {
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.7rem;
+}
+.blog-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.blog-tag {
+  padding: 0.2em 0.75em;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: var(--surface-raised);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.9375rem;
+  color: var(--fg-muted);
+}
+.blog-signature {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-variation-settings: "SOFT" 100;
+  font-size: 1.6rem;
+  color: var(--fg);
+}
+.blog-pager {
+  display: grid;
+  margin-top: 4rem;
+  border-top: 1px dashed var(--hairline);
+}
+@media (min-width: 640px) {
+  .blog-pager {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+.blog-pager-link {
+  display: block;
+  padding: 1.5rem 0;
+}
+.blog-pager-title {
+  display: block;
+  margin-top: 0.35rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.2rem;
+  line-height: 1.3;
+  color: var(--fg);
+  transition: color 0.2s;
+}
+.blog-pager-link:hover .blog-pager-title {
+  color: var(--accent);
+}
+
+/* ── Blog post body (rendered Markdown) ─────────────────────────────── */
+.post-body {
+  font-family: var(--font-serif);
+  color: var(--fg-muted);
+  font-size: 1.1875rem;
+  line-height: 1.72;
+}
+.post-body > * + * {
+  margin-top: 1.25em;
+}
+/* Drop cap on the opening paragraph */
+.post-body > p:first-child::first-letter {
+  float: left;
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 100, "opsz" 144;
+  font-weight: 500;
+  font-size: 4.1em;
+  line-height: 0.82;
+  margin: 0.08em 0.1em 0 0;
+  color: var(--accent);
+}
+.post-body h2,
+.post-body h3,
+.post-body h4 {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 100;
+  color: var(--fg);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  scroll-margin-top: 88px;
+}
+.post-body h2 {
+  font-size: 1.9rem;
+  margin-top: 2.2em;
+}
+.post-body h3 {
+  font-size: 1.45rem;
+  margin-top: 1.8em;
+}
+.post-body h4 {
+  font-size: 1.15rem;
+  margin-top: 1.6em;
+}
+.post-body strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+/* Highlighter-style links */
+.post-body a {
+  color: var(--fg);
+  text-decoration: none;
+  background-image: linear-gradient(transparent 62%, var(--mark) 62%);
+}
+.post-body a:hover {
+  background-image: linear-gradient(transparent 15%, var(--mark) 15%);
+}
+.post-body ul,
+.post-body ol {
+  padding-left: 1.4em;
+}
+.post-body ul {
+  list-style: "–  ";
+}
+.post-body ol {
+  list-style: decimal;
+}
+.post-body li + li {
+  margin-top: 0.4em;
+}
+.post-body li::marker {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+.post-body blockquote {
+  position: relative;
+  margin-block: 2em;
+  padding-left: 1.6em;
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 100;
+  font-style: italic;
+  font-size: 1.3em;
+  line-height: 1.45;
+  color: var(--fg);
+}
+.post-body blockquote::before {
+  content: "\201C";
+  position: absolute;
+  left: -0.1em;
+  top: -0.2em;
+  font-size: 2.6em;
+  line-height: 1;
+  color: var(--accent);
+}
+.post-body hr {
+  border: 0;
+  margin: 3em 0;
+  text-align: center;
+}
+.post-body hr::after {
+  content: "\2042";
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--accent);
+}
+.post-body img {
+  border-radius: 6px;
+  margin-inline: auto;
+  box-shadow: 0 0 0 1px var(--hairline), 0 18px 40px -24px rgba(60, 35, 15, 0.45);
+}
+.post-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+  display: block;
+  overflow-x: auto;
+}
+.post-body th,
+.post-body td {
+  padding: 0.55em 0.8em;
+  border-bottom: 1px solid var(--hairline);
+  text-align: left;
+}
+.post-body th {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--fg);
+  font-weight: 500;
+}
+.post-body :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  background: var(--surface-raised);
+  color: var(--fg);
+  box-shadow: inset 0 0 0 1px var(--hairline);
+}
+.post-body pre {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  padding: 1.1em 1.3em;
+  border-radius: 8px;
+  overflow-x: auto;
+  box-shadow: inset 0 0 0 1px var(--hairline);
+}
+
+/* Shiki dual themes: light colours are inline, dark ones come as --shiki-dark */
+:root[data-theme="dark"] .astro-code,
+:root[data-theme="dark"] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .astro-code,
+  :root:not([data-theme="light"]) .astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
   }
 }

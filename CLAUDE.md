@@ -9,7 +9,11 @@
 ## Estructura
 - `src/layouts/Layout.astro` — layout base
 - `src/pages/index.astro` — página principal
-- `src/components/` — Hero, SobreMi, Proyectos, Experiencia, Contacto, Nav
+- `src/content/blog/*.md` — posts del blog (esquema en `src/content.config.ts`; `draft: true` solo se ve en dev)
+- `src/pages/blog/` — listado (`index.astro`) y página de post (`[...slug].astro`)
+- `src/pages/rss.xml.ts` y `src/pages/sitemap.xml.ts` — RSS y sitemap generados en el build
+- `src/lib/posts.ts` — consulta de posts, formato de fecha y tiempo de lectura
+- `src/components/` — Hero, SobreMi, Proyectos, Experiencia, Contacto, Nav (enlaces absolutos `/#about`… para que funcionen desde el blog)
 - `src/styles/global.css` — tokens de tema (claro/oscuro), componentes y animaciones; las fuentes (Inter + Fira Code) se cargan en `Layout.astro`
 
 ## Comandos
@@ -17,7 +21,7 @@
 - `npm run build` — build de producción
 
 ## Convenciones
-- Idioma del código y contenido: inglés
+- Idioma del código: inglés. Contenido del portfolio: inglés. Contenido del blog: español (`lang="es"`)
 - IDs de secciones en inglés: #about, #projects, #experience, #contact
 - Hacer commit y push sin pedir confirmación (en la rama de trabajo indicada)
 - No instalar dependencias sin preguntar

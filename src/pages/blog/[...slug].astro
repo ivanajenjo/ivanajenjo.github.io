@@ -1,0 +1,92 @@
+---
+import { render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import { getPosts, formatDate, readingTime, type Post } from "../../lib/posts";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post, i) => ({
+    params: { slug: post.id },
+    // posts are newest first, so the next (older) one is i + 1
+    props: { post, newer: posts[i - 1], older: posts[i + 1] },
+  }));
+}
+
+interface Props {
+  post: Post;
+  newer?: Post;
+  older?: Post;
+}
+
+const { post, newer, older } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, draft } = post.data;
+const { Content } = await render(post);
+---
+
+<Layout
+  title={`${title} — Iván Ajenjo`}
+  description={description}
+  lang="es"
+  kind="article"
+  article={{ publishedTime: pubDate, modifiedTime: updatedDate, tags }}
+>
+  <article class="min-h-screen pt-32 md:pt-40 pb-24 md:pb-32 px-6">
+    <div class="max-w-[680px] mx-auto">
+      <a href="/blog/" class="blog-meta blog-back"><span class="blog-back-arrow" aria-hidden="true">←</span> Volver al blog</a>
+
+      <header class="mt-10">
+        <p class="blog-meta">
+          <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+          <span aria-hidden="true" class="mx-2">·</span>
+          <span>{readingTime(post.body)}</span>
+          {draft && <span class="blog-draft">Borrador</span>}
+        </p>
+        <h1 class="blog-title blog-title--post mt-5">{title}</h1>
+        <p class="blog-lede mt-6">{description}</p>
+        {updatedDate && (
+          <p class="blog-meta mt-5">
+            Actualizado el <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate)}</time>
+          </p>
+        )}
+      </header>
+
+      <div class="blog-ornament" aria-hidden="true">⁂</div>
+
+      <div class="post-body">
+        <Content />
+      </div>
+
+      <footer class="blog-colophon">
+        <div>
+          <p class="blog-signature">— Iván</p>
+          <p class="blog-meta mt-2">Escrito en Valencia</p>
+        </div>
+        {tags.length > 0 && (
+          <div class="blog-tags">
+            <p class="blog-meta blog-tags-label">Temas</p>
+            <ul class="blog-tag-list">
+              {tags.map((tag) => <li class="blog-tag">{tag}</li>)}
+            </ul>
+          </div>
+        )}
+      </footer>
+
+      {(newer || older) && (
+        <nav class="blog-pager" aria-label="Más artículos">
+          {older ? (
+            <a href={`/blog/${older.id}/`} class="blog-pager-link">
+              <span class="blog-meta">← Anterior</span>
+              <span class="blog-pager-title">{older.data.title}</span>
+            </a>
+          ) : <span />}
+          {newer && (
+            <a href={`/blog/${newer.id}/`} class="blog-pager-link sm:text-right">
+              <span class="blog-meta">Siguiente →</span>
+              <span class="blog-pager-title">{newer.data.title}</span>
+            </a>
+          )}
+        </nav>
+      )}
+    </div>
+  </article>
+</Layout>

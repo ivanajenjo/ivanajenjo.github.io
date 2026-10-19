@@ -2,15 +2,32 @@
 import "../styles/global.css";
 import Nav from "../components/Nav.astro";
 
+interface Article {
+  publishedTime: Date;
+  modifiedTime?: Date;
+  tags?: string[];
+}
+
 interface Props {
   title?: string;
   description?: string;
+  /** Page language; the portfolio is in English, the blog in Spanish */
+  lang?: "en" | "es";
+  /** "profile" for the home page, "blog" for the blog index, "article" for posts */
+  kind?: "profile" | "blog" | "article";
+  article?: Article;
 }
 
 const {
   title = "Iván Ajenjo — Backend Software Engineer | Java, Spring Boot & Kafka",
   description = "Iván Ajenjo is a Backend Software Engineer in Valencia, Spain, specialized in Java, Spring Boot microservices, Apache Kafka and cloud-native platforms on Kubernetes.",
+  lang = "en",
+  kind = "profile",
+  article,
 } = Astro.props;
+const ogLocale = lang === "es" ? "es_ES" : "en_US";
+// The blog has its own warm, editorial look (see the .blog scope in global.css)
+const isBlog = kind === "blog" || kind === "article";
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
@@ -49,41 +66,89 @@ const websiteSchema = {
   publisher: { "@id": `${siteUrl}/#person` },
 };
 
-const pageSchema = {
-  "@type": "ProfilePage",
-  "@id": `${canonical.href}#profile`,
-  url: canonical.href,
-  name: title,
-  description,
-  inLanguage: "en",
-  isPartOf: { "@id": `${siteUrl}/#website` },
-  mainEntity: { "@id": `${siteUrl}/#person` },
+const pageSchemas = {
+  profile: {
+    "@type": "ProfilePage",
+    "@id": `${canonical.href}#profile`,
+    url: canonical.href,
+    name: title,
+    description,
+    inLanguage: lang,
+    isPartOf: { "@id": `${siteUrl}/#website` },
+    mainEntity: { "@id": `${siteUrl}/#person` },
+  },
+  blog: {
+    "@type": "Blog",
+    "@id": `${canonical.href}#blog`,
+    url: canonical.href,
+    name: title,
+    description,
+    inLanguage: lang,
+    isPartOf: { "@id": `${siteUrl}/#website` },
+    author: { "@id": `${siteUrl}/#person` },
+  },
+  article: {
+    "@type": "BlogPosting",
+    "@id": `${canonical.href}#article`,
+    url: canonical.href,
+    headline: title,
+    description,
+    inLanguage: lang,
+    image: ogImage,
+    datePublished: article?.publishedTime.toISOString(),
+    dateModified: (article?.modifiedTime ?? article?.publishedTime)?.toISOString(),
+    keywords: article?.tags,
+    isPartOf: { "@id": `${siteUrl}/blog/#blog` },
+    author: { "@id": `${siteUrl}/#person` },
+    mainEntityOfPage: canonical.href,
+  },
 };
+const pageSchema = pageSchemas[kind];
 
 const jsonLd = { "@context": "https://schema.org", "@graph": [personSchema, websiteSchema, pageSchema] };
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="author" content="Iván Ajenjo" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-    <meta name="theme-color" content="#000000" />
+    {isBlog ? (
+      <>
+        <meta name="theme-color" content="#f4eee3" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#1a1612" media="(prefers-color-scheme: dark)" />
+      </>
+    ) : (
+      <meta name="theme-color" content="#000000" />
+    )}
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="sitemap" href="/sitemap.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Iván Ajenjo — Blog" href="/rss.xml" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
 
-    <meta property="og:type" content="profile" />
+    <meta property="og:type" content={kind === "article" ? "article" : kind === "blog" ? "website" : "profile"} />
     <meta property="og:site_name" content="Iván Ajenjo" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="profile:first_name" content="Iván" />
-    <meta property="profile:last_name" content="Ajenjo" />
+    <meta property="og:locale" content={ogLocale} />
+    {kind === "profile" && (
+      <>
+        <meta property="profile:first_name" content="Iván" />
+        <meta property="profile:last_name" content="Ajenjo" />
+      </>
+    )}
+    {article && (
+      <>
+        <meta property="article:published_time" content={article.publishedTime.toISOString()} />
+        {article.modifiedTime && <meta property="article:modified_time" content={article.modifiedTime.toISOString()} />}
+        <meta property="article:author" content={`${siteUrl}/`} />
+        {article.tags?.map((tag) => <meta property="article:tag" content={tag} />)}
+      </>
+    )}
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -104,6 +169,12 @@ const jsonLd = { "@context": "https://schema.org", "@graph": [personSchema, webs
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Fira+Code:wght@400;500&display=swap"
     />
+    {isBlog && (
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..650;1,8..60,400..650&display=swap"
+      />
+    )}
 
     <!-- Apply the saved theme before first paint to avoid a flash -->
     <script is:inline>
@@ -113,7 +184,7 @@ const jsonLd = { "@context": "https://schema.org", "@graph": [personSchema, webs
       } catch {}
     </script>
   </head>
-  <body>
+  <body class={isBlog ? "blog" : undefined}>
     <a
       href="#main"
       class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-ink"
