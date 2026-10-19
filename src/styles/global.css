@@ -373,6 +373,9 @@
 .blog #mobile-menu li {
   border-color: var(--hairline);
 }
+.blog header .nav-divider {
+  background: var(--hairline);
+}
 
 /* Type */
 .blog-kicker,

@@ -4,8 +4,9 @@ const links = [
   { href: '/#about', label: 'About' },
   { href: '/#projects', label: 'Projects' },
   { href: '/#experience', label: 'Experience' },
-  { href: '/blog/', label: 'Blog' },
   { href: '/#contact', label: 'Contact' },
+  // Kept apart from the portfolio sections: it's a separate area of the site
+  { href: '/blog/', label: 'Blog', separate: true },
 ];
 const inBlog = Astro.url.pathname.startsWith('/blog');
 const isCurrent = (href: string) => href === '/blog/' && inBlog;
@@ -21,7 +22,8 @@ const isCurrent = (href: string) => href === '/blog/' && inBlog;
     <div class="flex items-center gap-1">
       <ul class="hidden md:flex items-center gap-1">
         {links.map(link => (
-          <li>
+          <li class:list={[link.separate && 'flex items-center gap-1']}>
+            {link.separate && <span class="nav-divider w-px h-4 mx-1 bg-white/15" aria-hidden="true"></span>}
             <a
               href={link.href}
               aria-current={isCurrent(link.href) ? 'page' : undefined}
@@ -65,7 +67,7 @@ const isCurrent = (href: string) => href === '/blog/' && inBlog;
   >
     <ul class="flex flex-col px-6 py-3">
       {links.map(link => (
-        <li class="border-b border-white/10 last:border-0">
+        <li class:list={['border-b border-white/10 last:border-0', link.separate && 'mt-4']}>
           <a href={link.href} aria-current={isCurrent(link.href) ? 'page' : undefined} class="mobile-link block py-3 text-2xl font-semibold tracking-tight text-[#f5f5f7]">
             {link.label}
           </a>
