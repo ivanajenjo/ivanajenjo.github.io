@@ -496,8 +496,12 @@
   letter-spacing: -0.01em;
   color: var(--fg);
   /* Highlighter sweep on hover */
-  background-image: linear-gradient(transparent 60%, var(--mark) 60%);
+  background-image: linear-gradient(transparent 10%, var(--mark) 10%, var(--mark) 94%, transparent 94%);
   background-size: 0% 100%;
+  /* Bleed the highlight slightly past the glyphs without shifting the text */
+  padding: 0 0.15em;
+  margin: 0 -0.15em;
+  border-radius: 0.15em;
   background-repeat: no-repeat;
   transition: background-size 0.45s cubic-bezier(0.28, 0.11, 0.32, 1);
   -webkit-box-decoration-break: clone;
