@@ -26,6 +26,8 @@ const {
   article,
 } = Astro.props;
 const ogLocale = lang === "es" ? "es_ES" : "en_US";
+// The blog has its own warm, editorial look (see the .blog scope in global.css)
+const isBlog = kind === "blog" || kind === "article";
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
@@ -114,7 +116,14 @@ const jsonLd = { "@context": "https://schema.org", "@graph": [personSchema, webs
     <meta name="description" content={description} />
     <meta name="author" content="Iván Ajenjo" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-    <meta name="theme-color" content="#000000" />
+    {isBlog ? (
+      <>
+        <meta name="theme-color" content="#f4eee3" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#1a1612" media="(prefers-color-scheme: dark)" />
+      </>
+    ) : (
+      <meta name="theme-color" content="#000000" />
+    )}
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
@@ -160,6 +169,12 @@ const jsonLd = { "@context": "https://schema.org", "@graph": [personSchema, webs
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Fira+Code:wght@400;500&display=swap"
     />
+    {isBlog && (
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..650;1,8..60,400..650&display=swap"
+      />
+    )}
 
     <!-- Apply the saved theme before first paint to avoid a flash -->
     <script is:inline>
@@ -169,7 +184,7 @@ const jsonLd = { "@context": "https://schema.org", "@graph": [personSchema, webs
       } catch {}
     </script>
   </head>
-  <body>
+  <body class={isBlog ? "blog" : undefined}>
     <a
       href="#main"
       class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-ink"

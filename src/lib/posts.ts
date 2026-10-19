@@ -17,6 +17,15 @@ const dateFormatter = new Intl.DateTimeFormat("es-ES", {
 
 export const formatDate = (date: Date) => dateFormatter.format(date);
 
+const shortDateFormatter = new Intl.DateTimeFormat("es-ES", {
+  day: "numeric",
+  month: "short",
+  timeZone: "UTC",
+});
+
+/** Day and month only ("19 oct"), for the year-grouped index. */
+export const formatShortDate = (date: Date) => shortDateFormatter.format(date).replace(".", "");
+
 /** Rough reading time at ~200 words per minute, ignoring code fences. */
 export function readingTime(markdown = ""): string {
   const words = markdown
