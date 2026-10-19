@@ -10,6 +10,7 @@
 - `src/layouts/Layout.astro` — layout base
 - `src/pages/index.astro` — página principal
 - `src/content/blog/*.md` — posts del blog (esquema en `src/content.config.ts`; `draft: true` solo se ve en dev)
+- `plantillas/` — plantillas de post (TIL, tutorial, deep dive, retrospectiva); fuera de `src/` para que no se publiquen
 - `src/pages/blog/` — listado (`index.astro`) y página de post (`[...slug].astro`)
 - `src/pages/rss.xml.ts` y `src/pages/sitemap.xml.ts` — RSS y sitemap generados en el build
 - `src/lib/posts.ts` — consulta de posts, formato de fecha y tiempo de lectura
