@@ -506,6 +506,43 @@
   margin-top: 4rem;
   padding-top: 2rem;
   border-top: 1px solid var(--hairline);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.75rem 2rem;
+}
+.blog-tags {
+  max-width: 22rem;
+}
+@media (min-width: 640px) {
+  .blog-tags {
+    text-align: right;
+  }
+  .blog-tag-list {
+    justify-content: flex-end;
+  }
+}
+.blog-tags-label {
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.7rem;
+}
+.blog-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.blog-tag {
+  padding: 0.2em 0.75em;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: var(--surface-raised);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.9375rem;
+  color: var(--fg-muted);
 }
 .blog-signature {
   font-family: var(--font-display);
