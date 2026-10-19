@@ -418,10 +418,31 @@
   text-decoration: underline;
   text-decoration-thickness: 1px;
 }
-.blog-link:hover,
-.blog-back:hover {
+.blog-link:hover {
   text-decoration: underline;
   text-decoration-thickness: 2px;
+}
+.blog-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em 1.1em;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+}
+.blog-back:hover {
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
+  border-color: var(--accent);
+}
+.blog-back:hover .blog-back-arrow {
+  transform: translateX(-3px);
+}
+.blog-back-arrow {
+  transition: transform 0.2s;
 }
 .blog-draft {
   margin-left: 0.6em;
